@@ -1,0 +1,100 @@
+AMD HSA Code Object
+  Version 1:0
+HSAIL 
+  Version 1:0
+  Profile 1  Machine model: 1  Default float rounding: 2
+ISA
+  Vendor AMD  Arch AMDGPU  Version 7:0:0
+Producer options
+  '-hsa_call_convention='
+
+Segments (total 1):
+  Segment (0)
+    Type: 1610612739     Flags: 0x00000006
+    Image Size: 396     Memory Size: 396     Align: 256     VAddr: 0
+
+Data Sections (total 1):
+  Section .hsatext (Index 1)
+    Type: 1     Flags: 0x00c00007
+    Size:  396     Address: 0     Align: 256
+
+Relocation Sections (total 0):
+
+Symbols (total 1):
+  Symbol &vec_add_kernel (Index 0):
+    Section: .hsatext     Section Offset: 0
+    VAddr: 0     Size: 396     Alignment: 256
+    Kind: KERNEL     Linkage: PROGRAM     Definition: TRUE
+
+AMD Kernel Code for &vec_add_kernel: 
+  amd_kernel_code_version_major                                = 1
+  amd_kernel_code_version_minor                                = 1
+  amd_machine_kind                                             = AMDGPU
+  amd_machine_version_major                                    = 0
+  amd_machine_version_minor                                    = 0
+  amd_machine_version_stepping                                 = 0
+  kernel_code_entry_byte_offset                                = 256
+  max_scratch_backing_memory_byte_size                         = 0
+  COMPUTE_PGM_RSRC1 (0xac004100):
+    granulated_workitem_vgpr_count                             = 1
+    granulated_wavefront_sgpr_count                            = 1
+    priority                                                   = 0
+    float_round_mode_32                                        = NEAREST_EVEN
+    float_round_mode_16_64                                     = NEAREST_EVEN
+    float_denorm_mode_32                                       = FLUSH_SOURCE_OUTPUT
+    float_denorm_mode_16_64                                    = FLUSH_NONE
+    enable_dx10_clamp                                          = TRUE
+    enable_ieee_mode                                           = TRUE
+  COMPUTE_PGM_RSRC2 (0x90000000):
+    user_sgpr_count                                            = 8
+    enable_sgpr_workgroup_id_x                                 = TRUE
+    enable_vgpr_workitem_id                                    = X
+    granulated_lds_size                                        = 0
+  KERNEL_CODE_PROPERTIES (0xa000b000):
+    enable_sgpr_private_segment_buffer                         = TRUE
+    enable_sgpr_dispatch_ptr                                   = TRUE
+    enable_sgpr_kernarg_segment_ptr                            = TRUE
+    private_element_size                                       = DWORD (4 bytes)
+    is_ptr64                                                   = TRUE
+  kernarg_segment_byte_size                                    = 50
+  wavefront_sgpr_count                                         = b
+  workitem_vgpr_count                                          = 7
+  kernarg_segment_alignment                                    = 4
+  group_segment_alignment                                      = 4
+  private_segment_alignment                                    = 4
+  wavefront_size                                               = 6
+
+Disassembly for &vec_add_kernel: 
+  asic(CI)
+  type(CS)
+
+  s_load_dword  s0, s[4:5], 0x01                        // 000000000000: C0000501
+  s_waitcnt     lgkmcnt(0)                              // 000000000004: BF8C007F
+  s_bfe_u32     s0, s0, 0x00100000                      // 000000000008: 9380FF00 00100000
+  s_mul_i32     s0, s0, s8                              // 000000000010: 93000800
+  v_add_i32     v0, vcc, s0, v0                         // 000000000014: 4A000000
+  s_load_dwordx4  s[0:3], s[6:7], 0x0c                  // 000000000018: C080070C
+  v_lshlrev_b32  v1, 2, v0                              // 00000000001C: 34020082
+  v_lshrrev_b32  v0, 30, v0                             // 000000000020: 2C00009E
+  s_waitcnt     lgkmcnt(0)                              // 000000000024: BF8C007F
+  v_add_i32     v2, vcc, v1, s0                         // 000000000028: D24A6A02 00000101
+  v_mov_b32     v3, s1                                  // 000000000030: 7E060201
+  v_addc_u32    v3, vcc, v0, v3, vcc                    // 000000000034: 50060700
+  v_add_i32     v4, vcc, v1, s2                         // 000000000038: D24A6A04 00000501
+  v_mov_b32     v5, s3                                  // 000000000040: 7E0A0203
+  v_addc_u32    v5, vcc, v0, v5, vcc                    // 000000000044: 500A0B00
+  flat_load_dword  v2, v[2:3]                           // 000000000048: DC300000 02000002
+  flat_load_dword  v3, v[4:5]                           // 000000000050: DC300000 03000004
+  s_load_dwordx2  s[0:1], s[6:7], 0x10                  // 000000000058: C0400710
+  s_waitcnt     lgkmcnt(0)                              // 00000000005C: BF8C007F
+  v_add_i32     v5, vcc, v1, s0                         // 000000000060: D24A6A05 00000101
+  v_mov_b32     v4, s1                                  // 000000000068: 7E080201
+  v_addc_u32    v6, vcc, v0, v4, vcc                    // 00000000006C: 500C0900
+  s_setreg_imm32_b32  hwreg(HW_REG_MODE, 0, 8), 0x000003f0 // 000000000070: BA803801 000003F0
+  s_waitcnt     vmcnt(0)                                // 000000000078: BF8C0F70
+  v_add_f32     v2, v2, v3                              // 00000000007C: 06040702
+  flat_store_dword  v[5:6], v2                          // 000000000080: DC700000 00000205
+  s_endpgm                                              // 000000000088: BF810000
+end
+
+AMD HSA Code Object End

@@ -1,14 +1,15 @@
-set( FOLDER_NAME common )
+set( FOLDER_NAME runtime_helper )
+set( SRC_FILES )
+set( HEADER_FILES 
+  agent.h
+  runtime_helper.h
+)
 set( SUBDIRECTORIES 
-  benchmark
-  command_line_option
-  time_measurement
-  runtime_helper
-  cl_util
+  hsa_runtime_helper
 )
 
 set( check_target ${FOLDER_NAME}_check )
-set( check_target_src )
+set( check_target_src ${SRC_FILES} ${HEADER_FILES} ${TEST_FILES})
 add_style_check_target(${check_target} "${check_target_src}" "${SUBDIRECTORIES}")
 
 ###############################################################
@@ -23,3 +24,6 @@ set( FOLDER_GROUP ${FOLDER_GROUP}/${FOLDER_NAME} )
 foreach( subdir ${SUBDIRECTORIES} )
     add_subdirectory( ${subdir} )
 endforeach( subdir )
+
+add_library(${FOLDER_NAME} ${SRC_FILES} ${HEADER_FILES})
+set_target_properties(${FOLDER_NAME} PROPERTIES LINKER_LANGUAGE CXX)
