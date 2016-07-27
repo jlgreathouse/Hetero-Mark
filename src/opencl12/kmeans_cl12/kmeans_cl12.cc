@@ -387,7 +387,7 @@ void KMEANS::Kmeans_clustering() {
     }
 
     c++;
-  } while ((delta > threshold) && (loop++ < 500));  // makes sure loop ends
+  } while (loop++ < 100);  // makes sure loop ends
   printf("iterated %d times\n", c);
 
   free(new_centers[0]);

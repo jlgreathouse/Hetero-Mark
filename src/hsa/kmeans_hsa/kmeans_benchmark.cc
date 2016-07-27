@@ -206,7 +206,7 @@ void KmeansBenchmark::KmeansClustering(int num_clusters) {
     UpdateMembership(num_clusters);
     UpdateClusterCentroids(num_clusters);
     num_iteration++;
-  } while ((delta > 0) && (num_iteration < 500));
+  } while (num_iteration < 100);
 
   printf("iterated %d times\n", num_iteration);
 }

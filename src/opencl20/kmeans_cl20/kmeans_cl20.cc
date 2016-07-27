@@ -519,7 +519,7 @@ void KMEANS::Kmeans_clustering() {
     unmap_cluster_svm();
 
     c++;
-  } while ((delta > threshold) && (loop++ < 500));
+  } while (loop++ < 100);
   // makes sure loop terminates
 
   printf("iterated %d times\n", c);
