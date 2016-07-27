@@ -108,7 +108,7 @@ void AES::InitKernel() {
       << "#pragma OPENCL EXTENSION cl_khr_byte_addressable_store : enable\n"
       << "#define Nb 4\n"
       << "#define Nr 14\n"
-      << "define Nk 8\n"
+      << "#define Nk 8\n"
       << "\n__constant uint eK[60]={";
 
   for (int i = 0; i < 60; ++i) {
