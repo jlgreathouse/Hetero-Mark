@@ -119,7 +119,7 @@ void ShallowWater::InitKernel() {
 }
 
 void ShallowWater::InitBuffer() {
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
   // Fine grain buffers
   u_curr_ = reinterpret_cast<double *>(
@@ -438,7 +438,7 @@ void ShallowWater::TimeSmooth(int ncycle) {
     cl_int err;
 
     tdt_ += tdt_;
-    size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+    size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
     err = clEnqueueSVMMemcpy(cmdQueue_, CL_FALSE, u_curr_, u_, sizeInBytes, 0,
                              NULL, NULL);
@@ -468,7 +468,7 @@ void ShallowWater::Initialize() {
   // FIXME: Boundary conditions
   cl_int err;
 
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
   err = clEnqueueSVMMemcpy(cmdQueue_, CL_FALSE, u_curr_, u_, sizeInBytes, 0,
                            NULL, NULL);
   err |= clEnqueueSVMMemcpy(cmdQueue_, CL_FALSE, v_curr_, v_, sizeInBytes, 0,

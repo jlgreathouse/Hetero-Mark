@@ -69,7 +69,7 @@ ShallowWater::~ShallowWater() {}
 void ShallowWater::InitKernel() {}
 
 void ShallowWater::InitBuffer() {
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
   // Fine grain buffers
   u_curr_ = reinterpret_cast<double *>(malloc(sizeInBytes));
@@ -184,7 +184,7 @@ void ShallowWater::TimeSmooth(int ncycle) {
                    p_curr_, u_next_, v_next_, p_next_, lparm);
   } else {
     tdt_ += tdt_;
-    size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+    size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
     memcpy(u_curr_, u_, sizeInBytes);
     memcpy(v_curr_, v_, sizeInBytes);
@@ -202,7 +202,7 @@ void ShallowWater::Initialize() {
   InitPsiP();
   InitVelocities();
 
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
   memcpy(u_curr_, u_, sizeInBytes);
   memcpy(v_curr_, v_, sizeInBytes);
   memcpy(p_curr_, p_, sizeInBytes);

@@ -120,7 +120,7 @@ void ShallowWater::InitKernel() {
 }
 
 void ShallowWater::InitBuffer() {
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
   cl_int err;
   u_curr_ =
@@ -439,7 +439,7 @@ void ShallowWater::TimeSmooth(int ncycle) {
     cl_int err;
 
     tdt_ += tdt_;
-    size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+    size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
 
     err = clEnqueueCopyBuffer(cmdQueue_, u_, u_curr_, 0, 0, sizeInBytes, 0,
                               NULL, NULL);
@@ -469,7 +469,7 @@ void ShallowWater::Initialize() {
   // FIXME: Boundary conditions
   cl_int err;
 
-  size_t sizeInBytes = sizeof(double) * m_len_ * n_len_;
+  size_t sizeInBytes = sizeof(double) * (m_len_+1) * (n_len_+1);
   err = clEnqueueCopyBuffer(cmdQueue_, u_, u_curr_, 0, 0, sizeInBytes, 0, NULL,
                             NULL);
   err |= clEnqueueCopyBuffer(cmdQueue_, v_, v_curr_, 0, 0, sizeInBytes, 0, NULL,
