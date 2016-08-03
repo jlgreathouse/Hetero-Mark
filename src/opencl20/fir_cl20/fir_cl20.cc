@@ -146,6 +146,8 @@ void FIR::UnmapSvmBuffers() {
 
   err = clEnqueueSVMUnmap(cmd_queue_, history_, 0, 0, 0);
   checkOpenCLErrors(err, "Ummap SVM history\n");
+
+  clFinish(cmd_queue_);
 }
 
 void FIR::Run() {

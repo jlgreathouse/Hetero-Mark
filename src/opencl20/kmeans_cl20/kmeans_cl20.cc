@@ -144,21 +144,25 @@ void KMEANS::map_cluster_svm(int mode) {
 void KMEANS::unmap_feature_svm() {
   err = clEnqueueSVMUnmap(cmd_queue, feature_svm, 0, 0, 0);
   checkOpenCLErrors(err, "Failed to clEnqueueSVMUnmap");
+  clFinish(cmd_queue);
 }
 
 void KMEANS::unmap_feature_swap_svm() {
   err = clEnqueueSVMUnmap(cmd_queue, feature_swap_svm, 0, 0, 0);
   checkOpenCLErrors(err, "Failed to clEnqueueSVMUnmap");
+  clFinish(cmd_queue);
 }
 
 void KMEANS::unmap_membership_svm() {
   err = clEnqueueSVMUnmap(cmd_queue, membership_svm, 0, 0, 0);
   checkOpenCLErrors(err, "Failed to clEnqueueSVMUnmap");
+  clFinish(cmd_queue);
 }
 
 void KMEANS::unmap_cluster_svm() {
   err = clEnqueueSVMUnmap(cmd_queue, cluster_svm, 0, 0, 0);
   checkOpenCLErrors(err, "Failed to clEnqueueSVMUnmap");
+  clFinish(cmd_queue);
 }
 
 void KMEANS::CL_initialize() {
