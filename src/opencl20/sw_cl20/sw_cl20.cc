@@ -47,7 +47,7 @@ ShallowWater::ShallowWater(unsigned m, unsigned n)
       n_(n),
       m_len_(m + 1),
       n_len_(n + 1),
-      itmax_(250),
+      itmax_(50),
       dt_(90.),
       tdt_(dt_),
       dx_(100000.),
