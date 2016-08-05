@@ -43,7 +43,7 @@
 
 PageRank::PageRank() {
   workGroupSize = 64;
-  maxIter = 1000;
+  maxIter = 50;
 }
 
 void PageRank::Initialize() {
