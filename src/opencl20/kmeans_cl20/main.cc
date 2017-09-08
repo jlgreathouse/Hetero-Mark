@@ -40,6 +40,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <cstring>
 #include "src/opencl20/kmeans_cl20/kmeans_cl20.h"
 #include "src/common/benchmark/benchmark_runner.h"
 #include "src/common/time_measurement/time_measurement.h"
@@ -79,8 +80,8 @@ int main(int argc, char const *argv[]) {
       return 0;
     }
 
-    fp.filename = const_cast<char *>(
-        command_line_option.GetArgumentValue("FileName")->AsString().c_str());
+    fp.filename = new char [command_line_option.GetArgumentValue("FileName")->AsString().length()+1];
+    std::strcpy (fp.filename, command_line_option.GetArgumentValue("FileName")->AsString().c_str());
     fp.threshold =
         command_line_option.GetArgumentValue("Threshold")->AsDouble();
     fp.max_cl =

@@ -40,6 +40,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <cstring>
 #include "src/opencl12/aes_cl12/aes_cl12.h"
 #include "src/common/benchmark/benchmark_runner.h"
 #include "src/common/time_measurement/time_measurement.h"
@@ -81,14 +82,17 @@ int main(int argc, char const *argv[]) {
   }
 
   FilePackage fp;
-  fp.mode = const_cast<char *>(
-      command_line_option.GetArgumentValue("Mode")->AsString().c_str());
-  fp.in = const_cast<char *>(
-      command_line_option.GetArgumentValue("InputFile")->AsString().c_str());
-  fp.key = const_cast<char *>(
-      command_line_option.GetArgumentValue("Keyfile")->AsString().c_str());
-  fp.out = const_cast<char *>(
-      command_line_option.GetArgumentValue("OutFile")->AsString().c_str());
+  fp.mode = new char [command_line_option.GetArgumentValue("Mode")->AsString().length()+1];
+  std::strcpy (fp.mode, command_line_option.GetArgumentValue("Mode")->AsString().c_str());
+
+  fp.in = new char [command_line_option.GetArgumentValue("InputFile")->AsString().length()+1];
+  std::strcpy (fp.in, command_line_option.GetArgumentValue("InputFile")->AsString().c_str());
+
+  fp.key = new char [command_line_option.GetArgumentValue("Keyfile")->AsString().length()+1];
+  std::strcpy (fp.key, command_line_option.GetArgumentValue("Keyfile")->AsString().c_str());
+
+  fp.out = new char [command_line_option.GetArgumentValue("OutFile")->AsString().length()+1];
+  std::strcpy (fp.out, command_line_option.GetArgumentValue("OutFile")->AsString().c_str());
 
   std::unique_ptr<AES> aes(new AES());
   aes->SetInitialParameters(fp);

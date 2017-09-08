@@ -40,6 +40,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <cstring>
 #include "src/opencl12/kmeans_cl12/kmeans_cl12.h"
 #include "src/common/benchmark/benchmark_runner.h"
 #include "src/common/time_measurement/time_measurement.h"
@@ -77,8 +78,8 @@ int main(int argc, char const *argv[]) {
 
   FilePackage fp;
 
-  fp.filename = const_cast<char *>(
-      command_line_option.GetArgumentValue("FileName")->AsString().c_str());
+  fp.filename = new char [command_line_option.GetArgumentValue("FileName")->AsString().length()+1];
+  std::strcpy (fp.filename, command_line_option.GetArgumentValue("FileName")->AsString().c_str());
   fp.threshold = command_line_option.GetArgumentValue("Threshold")->AsDouble();
   fp.max_cl = command_line_option.GetArgumentValue("max_nclusters")->AsInt32();
   fp.min_cl = command_line_option.GetArgumentValue("min_nclusters")->AsInt32();
